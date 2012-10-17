@@ -10,12 +10,12 @@ Gem::Specification.new do |s|
   s.email       = ["ricard@kaltha.com"]
   s.homepage    = ""
   s.summary     = %q{Add model scope to your Dragonfly models}
-  s.description = %q{Dragonfly uses current datetime to store files, instead use :id_partition like paperclip and add model scope to separte diferent model images}
+  s.description = %q{Dragonfly uses current datetime to store files, instead use :id_partition like paperclip and add model scope to separate different model images}
 
   s.rubyforge_project = "dragonfly_rails"
-  
+
   s.add_dependency('dragonfly')
-  #s.add_dependency('paperclip')
+  s.add_dependency('paperclip')
   s.add_dependency('rails')
   s.add_development_dependency('shoulda')
   s.add_development_dependency('rack-cache')
