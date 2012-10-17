@@ -32,6 +32,7 @@ Image files will be stored as /images/000/000/001/filename_original.jpg
   
     # Default is Rails.root.join('public','assets'), this will only be used on development environment.
     # On production environment is expected to use amazon and heroku.
+    ## CHRISPY FORK NOTE: not anymore... uses local filesystem everywhere
     config.dragonfly_rails.assets_path = 'local/path/where/assets/should/be/stored'
 === Model setup
 

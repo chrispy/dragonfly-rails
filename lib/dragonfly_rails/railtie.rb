@@ -3,7 +3,7 @@ module DragonflyRails
   class Railtie < ::Rails::Railtie
     config.dragonfly_rails = DragonflyRails
     initializer 'dragonfly_rails.extend_dragonfly', :before => 'dragonfly_rails.active_record' do
-      datastore_type = (Rails.env.production? || Rails.env.staging?) ? 's3' : 'fs'
+      datastore_type = 'fs'
       require File.expand_path("../data_storage/#{datastore_type}", __FILE__)
     end
     initializer 'dragonfly_rails.active_record' do
@@ -21,14 +21,8 @@ module DragonflyRails
         c.protect_from_dos_attacks = config.protect_from_dos_attacks
         c.secret = config.security_key
         c.log = ::Rails.logger
-        if ::Rails.env.production? || ::Rails.env.staging?
-          @app.configure_with(:heroku, config.storage_options)
-        else
-          if c.datastore.is_a?(::Dragonfly::DataStorage::FileDataStore)
-            c.datastore.root_path = config.assets_path.to_s
-            c.datastore.server_root = ::Rails.root.join('public').to_s
-          end
-        end
+				c.datastore.root_path = config.assets_path.to_s
+				c.datastore.server_root = ::Rails.root.join('public').to_s
         c.url_format = "/#{config.route_path}/:job/:basename.:format"
         c.analyser.register(::Dragonfly::Analysis::FileCommandAnalyser)
       end
