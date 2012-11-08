@@ -46,8 +46,18 @@ module Dragonfly
           original_save_dragonfly_attachments
           dragonfly_attachments.each do |attribute, attachment|
             uid = "#{attribute}_uid"
-            if eval("!@saved_#{uid}") and changes[uid] and changes[uid].first.nil?
-              eval("@saved_#{uid} = true")
+            if !instance_variable_get(:"@saved_#{uid}") and changes[uid] and changes[uid].first.nil?
+              instance_variable_set(:"@saved_#{uid}", true)
+              save!
+            end
+          end
+        end
+        if path_style == :cache_partition && !new_record?
+          original_save_dragonfly_attachments
+          dragonfly_attachments.each do |attribute, attachment|
+            uid = "#{attribute}_uid"
+            if !instance_variable_get(:"@saved_#{uid}") and changes[uid] and changes[uid].first.nil?
+              instance_variable_set(:"@saved_#{uid}", true)
               save!
             end
           end
